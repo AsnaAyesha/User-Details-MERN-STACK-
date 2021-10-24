@@ -1,19 +1,63 @@
 import User from "../Model/userSchema.js";
 
-export const getUser = (req,res) => {
-    res.send("hello world!")
+//Get all users
+export const getUser =async (request,response) => {
+    try{
+       let user = await  User.find()
+        response.json(user)
+    }catch(error){
+        response.json({message: error.message})
+    }
 }
 
-export const addUser = async(req,res) =>{
-    console.log(req.body);
-    const user= req.body;
+//save dataof the user in db
+export const addUser = async(request,response) =>{
+    // console.log(req.body);
+    // retreive the info of user from front end
+    const user= request.body;
+    console.log("inside database")
     const newUser = new User(user)
 
     try{
         await  newUser.save()
-        res.json(newUser)
-    }catch(err){
-        res.json({msg: err.msg})
+       response.status(201).json(newUser);
+    }catch(error){
+        response.status(409).json({ message: error.message});  
     }
     // res.json("goodmorning")
+}
+
+//Get user by id
+export const getUserById = async ( request , response ) => {
+    const id = request.params.id;
+    try{
+        const user = await User.findById(id)
+        response.json(user)
+    }catch(error){
+        response.status(409).json({ message: error.message});
+    }
+}
+
+//save data of edited user in the database
+export const editUser = async ( request , response ) => {
+    let user = await User.findById(request.params.id)
+    user = request.body;
+
+    const editUser = new User(user)
+    try{
+        await User.updateOne({_id:request.params.id},editUser)
+        response.json(editUser)
+    }catch(error){
+        response.json({message:error.message})
+    }
+}
+
+//deleting data of user from database
+export const deleteUser =async (request,response) => {
+    try{
+        await User.deleteOne({_id: request.params.id});
+        response.status(201).json("User deleted Successfully");
+    } catch (error){
+        response.status(409).json({ message: error.message});     
+    }
 }
