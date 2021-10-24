@@ -38,10 +38,10 @@ const AddUser = () => {
                         <input 
                             onChange={(e) => onValueChange(e)}
                             type="text" 
-                            class="form-control" 
+                            class="form-control text-primary" 
                             name="name" 
                             value={name} 
-                            placeholder="Enter Your Name"  
+                         
                         />
                     </div>
                     <div class="mb-3">

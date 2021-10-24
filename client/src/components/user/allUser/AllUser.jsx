@@ -36,16 +36,16 @@ const AllUser = () => {
                 </thead>
                 <tbody className="table-light">
                     {
-                        users.map(user =>
+                        users.map((user,index) =>
                             <tr>
-                                <th scope="row">{user.id}</th>
+                                <th scope="row">{index + 1}</th>
                                 <td>{user.name}</td>
                                 <td>{user.username}</td>
                                 <td>{user.email}</td>
                                 <td>{user.phone}</td>
                                 <td> 
-                                    <Link className="btn btn-primary" to={`/edit/${user.id}`} style={{marginRight:1 + "em"}}>Edit</Link> 
-                                    <Link className="btn btn-danger" onClick={() => deleteUserDetails(user.id)}>Delete</Link> 
+                                    <Link className="btn btn-primary" to={`/edit/${user._id}`} style={{marginRight:1 + "em"}}>Edit</Link> 
+                                    <Link className="btn btn-danger" onClick={() => deleteUserDetails(user._id)} to="/">Delete</Link> 
                                 </td>   
                             </tr>
                         )
